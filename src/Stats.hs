@@ -91,7 +91,7 @@ draw (Node x ts0) = x : drawSubTrees ts0
 -- Pure varients
 
 newtype Stat = Stat IB.IntBag
-    deriving(Eq,Ord,Monoid)
+    deriving(Eq,Ord,Semigroup,Monoid)
 
 prependStat :: String -> Stat -> Stat
 prependStat name (Stat m) = Stat $ IB.fromList [ (fromAtom $ mappend (toAtom $ "{" ++ name ++ "}.")  (unsafeIntToAtom x),y) | (x,y) <- IB.toList m ]
@@ -117,7 +117,7 @@ class Monad m => MonadStats m where
     mtickStat :: Stat -> m ()
 
 newtype StatT m a = StatT (WriterT Stat m a)
-    deriving(MonadIO, Functor, MonadFix, MonadTrans, Monad)
+    deriving(MonadIO, Functor, MonadFix, MonadTrans, Applicative, Monad)
 
 runStatT :: Monad m => StatT m a -> m (a,Stat)
 runStatT (StatT m) =  runWriterT m
@@ -127,6 +127,7 @@ data StatM a = StatM a !Stat
 instance Functor StatM where
     fmap f (StatM a s) = StatM (f a) s
 
+instance Applicative StatM
 instance Monad StatM where
     StatM _ s1 >> StatM y s2 = StatM y (s1 `mappend` s2)
     return x = StatM x mempty

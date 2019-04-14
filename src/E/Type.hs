@@ -2,6 +2,7 @@
 
 module E.Type where
 
+import Prelude hiding ((<>))
 import Data.Foldable hiding(concat)
 import Data.Traversable
 
@@ -14,6 +15,10 @@ import Name.Names
 import StringTable.Atom
 import Util.Gen
 import qualified Info.Info as Info
+
+
+tvrInfo_u = undefined
+
 
 {- @Internals
 

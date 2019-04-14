@@ -116,9 +116,10 @@ instance FromAtom BS.ByteString where
         sl <- fromAtomIO a :: IO CStringLen
         BS.unsafePackCStringLen sl
 
+instance Semigroup Atom where
+    (<>) x y = unsafePerformIO $ atomAppend x y
 instance Monoid Atom where
     mempty = Atom (#const ATOM_EMPTY)
-    mappend x y = unsafePerformIO $ atomAppend x y
 
 instance IsString Atom where
     fromString = toAtom
@@ -168,9 +169,9 @@ instance Intjection Atom where
     fromIntjection (Atom i) = fromIntegral i
 
 newtype instance GSet Atom = GSetAtom (IntjectionSet Atom)
-    deriving(Monoid,IsEmpty,HasSize,Collection,Unionize,SetLike,Eq,Ord,Show)
+    deriving(Semigroup,Monoid,IsEmpty,HasSize,Collection,Unionize,SetLike,Eq,Ord,Show)
 newtype instance GMap Atom v = GMapAtom (IntjectionMap Atom v)
-    deriving(Monoid,IsEmpty,HasSize,Collection,Unionize,SetLike,MapLike,Eq,Ord)
+    deriving(Semigroup,Monoid,IsEmpty,HasSize,Collection,Unionize,SetLike,MapLike,Eq,Ord)
 
 instance Functor (GMap Atom) where
     fmap f (GMapAtom (IntjectionMap mp)) = GMapAtom (IntjectionMap (fmap f mp))

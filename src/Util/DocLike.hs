@@ -1,9 +1,8 @@
 module Util.DocLike(module Util.DocLike, module Data.Monoid) where
 
 -- simplified from Doc.DocLike
-
 import Control.Applicative
-import Data.Monoid(Monoid(..),(<>))
+import Data.Monoid(Monoid(..))
 import Data.Traversable as T
 import qualified Text.PrettyPrint.HughesPJ as P
 import qualified Text.PrettyPrint.Leijen as L
@@ -104,9 +103,11 @@ punctuate p (d:ds)  = (d <-> p) : punctuate p ds
 newtype ShowSDoc = SD { unSD :: String -> String }
 showSD (SD s) = s ""
 
+instance Semigroup ShowSDoc where
+    (<>) (SD a) (SD b) = SD $ a . b
+  
 instance Monoid ShowSDoc where
     mempty = SD id
-    mappend (SD a) (SD b) = SD $ a . b
 
 instance (DocLike ShowSDoc) where
     char c = SD (c:)
@@ -175,8 +176,10 @@ instance DocLike L.Doc where
 
 instance Monoid L.Doc where
     mempty = L.empty
-    mappend = (L.<>)
-    mconcat = L.hcat
+  
+instance Semigroup L.Doc where
+    (<>) = (L.<>)
+--    mconcat = L.hcat
 
 
 

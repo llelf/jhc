@@ -16,6 +16,7 @@ instance Functor (ReaderWriter r w) where
 	fmap f (ReaderWriter g) = ReaderWriter $ \r -> case g r of
             (# a, w #) -> (# f a, w #)
 
+instance Applicative (ReaderWriter r w)
 instance (Monoid w) => Monad (ReaderWriter r w) where
 	return a = ReaderWriter $ \_ -> (# a, mempty #)
 	(ReaderWriter m) >>= k  = ReaderWriter $ \r -> case m r of

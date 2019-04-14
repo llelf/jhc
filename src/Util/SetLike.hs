@@ -167,7 +167,7 @@ findWithDefault d k m = case mlookup k m of
     Just x -> x
 
 newtype EnumSet a = EnumSet IS.IntSet
-    deriving(Monoid,IsEmpty,HasSize,Unionize,Eq,Ord)
+    deriving(Semigroup,Monoid,IsEmpty,HasSize,Unionize,Eq,Ord)
 
 type instance Elem (EnumSet a) = a
 type instance Key (EnumSet a) = a
@@ -187,7 +187,7 @@ instance Enum a => SetLike (EnumSet a) where
         (x,y) -> (EnumSet x,EnumSet y)
 
 newtype EnumMap k v = EnumMap (IM.IntMap v)
-    deriving(Monoid,IsEmpty,Functor,Foldable,Traversable,HasSize,Unionize,Eq,Ord)
+    deriving(Semigroup,Monoid,IsEmpty,Functor,Foldable,Traversable,HasSize,Unionize,Eq,Ord)
 
 type instance Elem (EnumMap k v) = (k,v)
 type instance Key (EnumMap k v) = k
@@ -218,7 +218,7 @@ class Intjection a where
     toIntjection :: Int -> a
 
 newtype IntjectionSet a = IntjectionSet IS.IntSet
-    deriving(Monoid,IsEmpty,HasSize,Unionize,Eq,Ord)
+    deriving(Semigroup,Monoid,IsEmpty,HasSize,Unionize,Eq,Ord)
 
 instance (Intjection a,Show a) => Show (IntjectionSet a) where
     showsPrec n is = showsPrec n $ toList is
@@ -241,7 +241,7 @@ instance Intjection a => SetLike (IntjectionSet a) where
         (x,y) -> (IntjectionSet x,IntjectionSet y)
 
 newtype IntjectionMap k v = IntjectionMap (IM.IntMap v)
-    deriving(Monoid,IsEmpty,Functor,Foldable,Traversable,HasSize,Unionize,Eq,Ord)
+    deriving(Semigroup,Monoid,IsEmpty,Functor,Foldable,Traversable,HasSize,Unionize,Eq,Ord)
 
 type instance Elem (IntjectionMap k v) = (k,v)
 type instance Key (IntjectionMap k v) = k

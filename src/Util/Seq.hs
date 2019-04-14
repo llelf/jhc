@@ -10,7 +10,7 @@ module Util.Seq
 
 import Control.Applicative
 import Control.Monad
-import Data.Foldable(Foldable(..))
+import Data.Foldable(Foldable())
 import Data.Monoid(Monoid(..))
 import Data.Traversable(Traversable(..))
 
@@ -57,13 +57,15 @@ instance Traversable Seq where
 instance Foldable Util.Seq.Seq where
     foldMap f s = mconcat (map f (toList s))
 
-instance MonadPlus Util.Seq.Seq where
-    mplus = mappend
-    mzero = mempty
+-- instance MonadPlus Util.Seq.Seq where
+--     mplus = mappend
+--     mzero = mempty
+
+instance Semigroup (Seq a) where
+    Seq f <> Seq g = Seq (\xs -> f (g xs))
 
 instance Monoid (Seq a) where
     mempty = Seq (\xs -> xs)
-    Seq f `mappend` Seq g = Seq (\xs -> f (g xs))
 
 instance Show a => Show (Seq a) where
     showsPrec n s = showsPrec n (toList s)

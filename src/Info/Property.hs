@@ -12,7 +12,7 @@ instance Show Properties where
 
 -- | list of properties of a function, such as specified by use pragmas or options
 newtype Properties = Properties (EnumBitSet Property)
-    deriving(Eq,Collection,SetLike,HasSize,Monoid,Unionize,IsEmpty)
+    deriving(Eq,Collection,SetLike,HasSize,Semigroup,Monoid,Unionize,IsEmpty)
 
 type instance Elem Properties = Property
 type instance Key Properties = Property

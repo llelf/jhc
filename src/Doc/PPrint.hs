@@ -7,6 +7,7 @@
 
 module Doc.PPrint where
 
+import Prelude hiding ((<$>),(<>))
 import Doc.DocLike
 import qualified Data.Map as Map
 

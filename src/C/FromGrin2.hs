@@ -52,7 +52,7 @@ data Written = Written {
     wEnums :: Map.Map Name Int,
     wFunctions :: Map.Map Name Function
     }
-    {-! derive: Monoid !-}
+deriving instance Monoid Written
 
 -- special type representations when possible
 data TyRep

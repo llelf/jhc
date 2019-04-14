@@ -38,6 +38,7 @@ instance Functor (RWS r w s) where
 	fmap f m = RWS $ \r s -> case runRWS' m r s of
 		(# a, s', w #) -> (# f a, s', w #)
 
+instance Applicative (RWS r w s)
 instance (Monoid w) => Monad (RWS r w s) where
 	return a = RWS $ \_ s -> (# a, s, mempty #)
 	m >>= k  = RWS $ \r s -> case runRWS' m r s of

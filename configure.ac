@@ -50,22 +50,22 @@ GHC=$HC
 GHCFLAGS="-hide-all-packages -package base"
 
 MPACK=""
-HS_NEEDS_PACKAGE([Codec.Compression.Zlib],zlib)
-HS_NEEDS_PACKAGE([Control.Monad.Reader],[mtl])
-HS_NEEDS_PACKAGE([Data.Array],[array])
-HS_NEEDS_PACKAGE([Data.Binary],[binary])
-HS_NEEDS_PACKAGE([Data.ByteString.UTF8],[utf8-string])
-HS_NEEDS_PACKAGE([Data.ByteString.Unsafe],[bytestring])
-HS_NEEDS_PACKAGE([Data.IntSet],[containers])
-HS_NEEDS_PACKAGE([Data.Yaml.Syck],HsSyck)
-HS_NEEDS_PACKAGE([System.Cmd],[process])
-HS_NEEDS_PACKAGE([System.Directory],[directory])
-HS_NEEDS_PACKAGE([System.FilePath],[filepath])
-HS_NEEDS_PACKAGE([System.Posix],[unix])
-HS_NEEDS_PACKAGE([System.Random],[random])
-HS_NEEDS_PACKAGE([System.Time],old-time)
-HS_NEEDS_PACKAGE([Text.PrettyPrint.HughesPJ],pretty)
-HS_NEEDS_PACKAGE([Text.Regex],regex-compat)
+dnl HS_NEEDS_PACKAGE([Codec.Compression.Zlib],zlib)
+dnl HS_NEEDS_PACKAGE([Control.Monad.Reader],[mtl])
+dnl HS_NEEDS_PACKAGE([Data.Array],[array])
+dnl HS_NEEDS_PACKAGE([Data.Binary],[binary])
+dnl HS_NEEDS_PACKAGE([Data.ByteString.UTF8],[utf8-string])
+dnl HS_NEEDS_PACKAGE([Data.ByteString.Unsafe],[bytestring])
+dnl HS_NEEDS_PACKAGE([Data.IntSet],[containers])
+dnl HS_NEEDS_PACKAGE([Data.Yaml.Syck],HsSyck)
+dnl HS_NEEDS_PACKAGE([System.Cmd],[process])
+dnl HS_NEEDS_PACKAGE([System.Directory],[directory])
+dnl HS_NEEDS_PACKAGE([System.FilePath],[filepath])
+dnl HS_NEEDS_PACKAGE([System.Posix],[unix])
+dnl HS_NEEDS_PACKAGE([System.Random],[random])
+dnl HS_NEEDS_PACKAGE([System.Time],old-time)
+dnl HS_NEEDS_PACKAGE([Text.PrettyPrint.HughesPJ],pretty)
+dnl HS_NEEDS_PACKAGE([Text.Regex],regex-compat)
 if test -n "$MPACK"; then
     echo "Some packages were not found:"
     echo "$MPACK"

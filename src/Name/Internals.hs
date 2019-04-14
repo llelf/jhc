@@ -26,7 +26,7 @@ import Data.Binary
 import Data.Bits
 import Data.Char
 import Data.Data
-import GHC.Base
+import GHC.Base hiding (Module)
 import StringTable.Atom
 
 {-

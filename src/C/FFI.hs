@@ -10,6 +10,7 @@ module C.FFI(
 import C.Prims
 import Data.Binary
 import Data.Typeable
+import GHC.Generics
 
 type CName = String
 
@@ -29,5 +30,6 @@ data FfiExport = FfiExport {
     ffiExportArgTypes :: [ExtType],
     ffiExportRetType  :: ExtType
     }
- deriving(Eq,Ord,Show,Typeable)
-     {-! derive: Binary !-}
+ deriving(Eq,Ord,Show,Typeable,Generic)
+
+instance Binary FfiExport

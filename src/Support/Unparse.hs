@@ -1,5 +1,6 @@
 module Support.Unparse(Unparse(), Unparsable(..), unparse, unparse', Side(..), atom, atomize, bop, pop, fixitize) where
 
+import Prelude hiding ((<>))
 import Doc.DocLike
 
 data Unparse a = Atom a | Pre a (Unparse a) | Fix (Unparse a) a (Unparse a) !Side !Int | Atomized (Unparse a) | Fixitized  !Side !Int (Unparse a)

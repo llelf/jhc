@@ -3,7 +3,7 @@ module Name.Binary() where
 import Data.Monoid
 import Maybe
 
-import Data.Binary
+import Data.Binary hiding (putList)
 import Name.Id
 import Name.Internals
 import Support.MapBinaryInstance

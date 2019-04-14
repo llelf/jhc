@@ -15,6 +15,7 @@ newtype ContextEither a = ContextEither (Either [String] a)
 
 runContextEither (ContextEither a) = a
 
+deriving instance Applicative ContextEither
 instance Monad ContextEither where
     fail s = ContextEither (Left [s])
     ContextEither x >>= y = case x of

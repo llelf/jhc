@@ -71,6 +71,7 @@ module C.Generate(
     voidStarType
     ) where
 
+import Prelude hiding ((<>),(<$>))
 import Char
 import Control.Monad
 import Control.Monad.RWS(RWS,MonadState(..),MonadWriter(..),MonadReader(..),runRWS,asks,MonadFix(..))
@@ -85,6 +86,7 @@ import qualified Data.Map as Map
 import qualified Data.Sequence as Seq
 import qualified Data.Set as Set
 import qualified Data.Traversable as Seq
+import qualified Data.Semigroup
 
 import Doc.DocLike
 import Util.Gen
@@ -100,7 +102,7 @@ data Env = Env {
 emptyEnv = Env { envUsedLabels = mempty, envInScope = mempty }
 
 newtype G a = G (RWS Env [(Name,Type)] (Int,Map.Map [Type] Name) a)
-    deriving(Monad,MonadWriter [(Name,Type)],MonadState (Int,Map.Map [Type] Name),MonadReader Env,MonadFix)
+    deriving(Functor,Applicative,Monad,MonadWriter [(Name,Type)],MonadState (Int,Map.Map [Type] Name),MonadReader Env,MonadFix)
 
 newtype Name = Name String
     deriving(Eq,Ord)
@@ -289,9 +291,11 @@ localVariable t n = expD $ do
 statementOOB :: Statement -> Statement
 statementOOB s = (sd $ draw s >> return empty)
 
+instance Semigroup Statement where
+    (<>) (St as) (St bs) = St $ pairOpt stmtPairOpt as bs
+
 instance Monoid Statement where
     mempty = St mempty
-    mappend (St as) (St bs) = St $ pairOpt stmtPairOpt as bs
 
 stmtPairOpt a b = f a b where
     f (SGoto l) y@(SLabel l')

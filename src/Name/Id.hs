@@ -170,7 +170,7 @@ idMapToIdSet (IntjectionMap im)  = IntjectionSet $ IM.keysSet im
 
 -- | Name monad transformer.
 newtype IdNameT m a = IdNameT (StateT (IdSet, IdSet) m a)
-    deriving(Monad, MonadTrans, Functor, MonadFix, MonadPlus, MonadIO)
+    deriving(Applicative, Monad, MonadTrans, Functor, MonadFix, MonadIO)
 
 instance (MonadReader r m) => MonadReader r (IdNameT m) where
 	ask       = lift ask

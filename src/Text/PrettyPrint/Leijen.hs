@@ -111,6 +111,7 @@ module Text.PrettyPrint.Leijen (
 
         ) where
 
+import Prelude hiding ((<>), (<$>))
 import System.IO (Handle,hPutStr,hPutChar,stdout)
 
 infixr 5 </>,<//>,<$>,<$$>

@@ -70,7 +70,7 @@ isValNamespace _ = False
 
 -- should only be used for printing, the parser should know when things are in
 -- operator position or not.
-isOpLike n  = x `elem` "!#$%&*+./<=>?@\\^-~:|" where
+isOpLike n  = x `elem` ("!#$%&*+./<=>?@\\^-~:|"::String) where
     (_,_,(x:_)) = nameParts n
 
 createName :: NameType -> Module -> String -> Name
@@ -145,7 +145,7 @@ parseName :: NameType -> String -> Name
 parseName t name = toName t (intercalate "." ms, intercalate "." (ns ++ [last sn])) where
     sn = (split (== '.') name)
     (ms,ns) = span validMod (init sn)
-    validMod (c:cs) = isUpper c && all (\c -> isAlphaNum c || c `elem` "_'") cs
+    validMod (c:cs) = isUpper c && all (\c -> isAlphaNum c || c `elem` ("_'"::String)) cs
     validMod _ = False
 
 nameType :: Name -> NameType

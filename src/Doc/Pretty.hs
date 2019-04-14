@@ -46,6 +46,8 @@ module Doc.Pretty
         , textProc, oob
         ) where
 
+import Prelude hiding ((<$>),(<>))
+import qualified Data.Semigroup as Semi
 import IO      (Handle,hPutStr,hPutChar,stdout)
 import Doc.DocLike hiding(empty)
 import qualified Doc.DocLike as DocLike
@@ -90,10 +92,13 @@ vcat            = fold (<$$>)
 fold f []       = empty
 fold f ds       = foldr1 f ds
 
+
 instance Monoid Doc where
     mempty = Doc.Pretty.empty
-    mappend = beside
-    mconcat = fold beside
+
+instance Semigroup Doc where
+    (<>) = beside
+--    mconcat = fold beside
 
 instance TextLike Doc where
     empty = Doc.Pretty.empty

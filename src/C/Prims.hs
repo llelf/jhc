@@ -1,6 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 module C.Prims where
 
+import Prelude hiding ((<>))
 import Data.Binary
 import Data.Monoid(Monoid(..))
 import Data.Typeable
@@ -16,10 +17,10 @@ import GHC.Exts
 
 data CallConv = CCall | StdCall | CApi | Primitive | DotNet
     deriving(Eq,Ord,Show)
-    {-! derive: Binary !-}
+deriving instance Binary CallConv
 
 data Safety = Safe | Unsafe deriving(Eq,Ord,Show)
-    {-! derive: Binary !-}
+deriving instance Binary Safety
 
 newtype ExtType = ExtType PackedString
     deriving(Binary,IsString,Eq,Ord)
@@ -35,7 +36,7 @@ newtype Requires = Requires (Set.Set (CallConv,PackedString))
 
 data DotNetPrim = DotNetField | DotNetCtor | DotNetMethod
     deriving(Typeable, Eq, Ord, Show)
-    {-! derive: Binary !-}
+--deriving instance Binary DotNetMethod
 
 primReqs p = f p where
     f CConst {} = primRequires p
@@ -87,11 +88,11 @@ data Prim =
         primRetTy :: Op.Ty
         }
     deriving(Typeable, Eq, Ord, Show)
-    {-! derive: Binary !-}
+    -- deriving instance Binary _
 
 data PrimTypeInfo = PrimSizeOf | PrimMaxBound | PrimMinBound | PrimAlignmentOf | PrimUMaxBound
     deriving(Typeable, Eq, Ord, Show)
-    {-! derive: Binary !-}
+    -- deriving instance Binary _
 
 primStaticTypeInfo :: Op.Ty -> PrimTypeInfo -> Maybe Integer
 primStaticTypeInfo (Op.TyBits (Op.Bits b) _) w = Just ans where

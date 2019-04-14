@@ -48,7 +48,7 @@ instance (Monad m, Monad (t m), MonadTrans t, NameMonad n m) => NameMonad n (t m
 
 -- | Name monad transformer.
 newtype NameMT n m a = NameMT (StateT (Set.Set n, Set.Set n) m a)
-    deriving(Monad, MonadTrans, Functor, MonadFix, MonadPlus, MonadIO)
+    deriving(Applicative, Monad, MonadTrans, Functor, MonadFix, MonadIO)
 
 -- | Run the name monad transformer.
 runNameMT :: (Monad m) => NameMT a1 m a -> m a

@@ -12,11 +12,13 @@ module Fixer.VMap(
     vmapHeads
     )where
 
+import Prelude hiding ((<>))
 import Data.Monoid(Monoid(..))
 import List(intersperse)
 import qualified Data.Map as Map
 import qualified Data.Set as Set
 import qualified Data.Typeable as T -- qualified to avoid clashing with T.Proxy
+import qualified Data.Semigroup
 
 import Doc.DocLike
 import Fixer.Fixer
@@ -109,6 +111,9 @@ instance (Show p,Show n,Ord p,Ord n) => Fixable (VMap p n) where
     lte x@VMap { vmapArgs = as, vmapNodes = Right ns } y@VMap { vmapArgs = as', vmapNodes = Right ns'} =  (Set.null (ns Set.\\ ns') && (Map.null $ Map.differenceWith (\a b -> if a `lte` b then Nothing else Just undefined) as as'))
     showFixable x = show x
 
+
+instance (Show p,Show n,Ord p,Ord n) => Semigroup (VMap p n) where
+    (<>) = lub
+  
 instance (Show p,Show n,Ord p,Ord n) => Monoid (VMap p n) where
     mempty = bottom
-    mappend = lub

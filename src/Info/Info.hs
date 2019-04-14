@@ -17,10 +17,13 @@ module Info.Info(
     empty
     ) where
 
+import Prelude hiding ((<>))
 import Data.Dynamic
+import Data.Typeable
 import Data.Monoid
 import Info.Property
 import qualified Data.Map as Map
+import qualified Data.Semigroup
 
 -- extensible type indexed product
 
@@ -58,9 +61,11 @@ instance Show Info where
 --    toConstr = undefined
 --    dataTypeOf = undefined
 
+instance Semigroup Info where
+    (<>) (Info ap as) (Info bp bs) = Info (mappend ap bp) (Map.union as bs)
+
 instance Monoid Info where
     mempty = empty
-    mappend (Info ap as) (Info bp bs) = Info (mappend ap bp) (Map.union as bs)
 
 class HasInfo a where
     getInfo :: a -> Info
